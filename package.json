@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "@parcel/packager-raw-url": "^2.16.4",
+    "@parcel/transformer-webmanifest": "^2.16.4",
+    "parcel": "^2.16.4",
+    "phaser": "^4.2.1"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "parcel src/index.html"
+  }
+}

@@ -1,0 +1,26 @@
+:root {
+    --fg: white;
+    --bg: black;
+
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    overflow: hidden;
+
+    color: var(--fg);
+    background-color: var(--bg);
+}
+
+canvas {
+    margin: 0 0 0 0;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --fg: black;
+        --bg: white;
+    }
+}
+
+html, body {
+    touch-action: none; /* Disables browser-handled zooming/scrolling */
+}
