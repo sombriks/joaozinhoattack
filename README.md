@@ -13,4 +13,5 @@ touch src/assets/main.css
 npm i -D parcel phaser
 npm pkg set type=module
 npm pkg set scripts.dev="parcel src/index.html"
+npm pkg set scripts.build="parcel build --dist-dir=dist src/index.html"
 ```
