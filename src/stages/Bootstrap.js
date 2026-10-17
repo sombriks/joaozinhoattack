@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 
 import {Button} from "../actors/Button";
+import {Monster} from "../actors/Monster";
 
 export class Bootstrap extends Phaser.Scene {
   constructor() {
@@ -9,6 +10,7 @@ export class Bootstrap extends Phaser.Scene {
 
   preload() {
     Button.preload(this);
+    Monster.preload(this);
   }
 
   create() {
@@ -16,7 +18,7 @@ export class Bootstrap extends Phaser.Scene {
       scene: this,
       x: 200,
       y: 200,
-      callback: () => console.log("Button clicked"),
+      callback: () => this.game.scene.switch("Bootstrap", "GameStart"),
     });
   }
 }

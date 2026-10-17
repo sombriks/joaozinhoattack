@@ -26,3 +26,7 @@ npm run dev
 ## Notas
 
 - O autocomplete do phaser só prestou depois de ajeitar o `jsconfig.json`
+- O `manbifest.json` está o menor possível que ainda permita instalar como PWA
+- O parcel não é exatamente zero-confioguração, ele apenas vai se 
+  configurando sozinho, de acordo com o que você decide usar. É bom conferir 
+  sempre o que ele está fazendo no `package.json` sem você saber.

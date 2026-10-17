@@ -1,30 +1,33 @@
 import Phaser from "phaser";
 
-import TEXTURE from "url:../assets/btn_teste.png";
+import BTN_TESTE from "url:../assets/btn_teste.png";
+import CLICK from "url:../assets/click.mp3";
 
 export class Button extends Phaser.GameObjects.Sprite {
+  /** @param {Phaser.Scene} stage*/
   static preload(stage) {
-    stage.load.image(TEXTURE, TEXTURE);
+    stage.load.image(BTN_TESTE, BTN_TESTE);
+    stage.load.audio(CLICK, CLICK);
   }
 
+  /** @param {{scene:Phaser.Scene,x:number,y:number,callback:Function}} config*/
   constructor({scene, x = 0, y = 0, callback}) {
-    super(scene, x, y, TEXTURE);
+    super(scene, x, y, BTN_TESTE);
     scene.add.existing(this);
     this.setInteractive({useHandCursor: true});
-    this.on("pointerdown", function () {
-      this.btPush();
-      if (callback) {
-        callback();
-      }
-    });
-
-    this.on("pointerup", this.btUnPush);
-    this.on("pointerout", this.btUnPush);
+    this.on("pointerdown", this.btPush, this);
+    this.on("pointerup", this.btUnPush, this);
+    this.on("pointerout", this.btUnPush, this);
+    this.callback = callback;
   }
 
   btPush() {
     this.setScale(0.92);
-    this.setTint(0xf3f3f3);
+    this.setTint(0x13f3f3);
+    this.scene.sound.play(CLICK);
+    if (this.callback) {
+      this.callback();
+    }
   }
 
   btUnPush() {

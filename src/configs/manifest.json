@@ -1,5 +1,4 @@
 {
-  "name": "joaozinho-attack",
   "short_name": "joaozinho-attack",
   "start_url": "../index.html",
   "display": "standalone",
@@ -7,7 +6,5 @@
     "src": "../assets/icone-1.png",
     "sizes": "512x512",
     "type": "image/png"
-  }],
-  "background_color": "#131313",
-  "theme_color": "#f3f3f3"
+  }]
 }
