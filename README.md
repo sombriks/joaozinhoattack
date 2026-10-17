@@ -30,3 +30,4 @@ npm run dev
 - O parcel não é exatamente zero-confioguração, ele apenas vai se 
   configurando sozinho, de acordo com o que você decide usar. É bom conferir 
   sempre o que ele está fazendo no `package.json` sem você saber.
+- Os plugins do phaser são um pouco burocráticos, mas são recompensadores.

@@ -5,11 +5,18 @@ import {Bootstrap} from "./stages/Bootstrap";
 import {GameStart} from "./stages/GameStart";
 import {GamePlay} from "./stages/GamePlay";
 
+import {ControllerPlugin} from "./configs/ControllerPlugin";
+
 export const game = new Phaser.Game({
-  scene: [Bootstrap, GameStart, GamePlay],
   pixelArt: true,
   width: 480,
   height: 640,
+  scene: [Bootstrap, GameStart, GamePlay],
+  plugins: {
+    scene: [
+      {key: "ControllerPlugin", plugin: ControllerPlugin, mapping: "controller"}
+    ]
+  },
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
