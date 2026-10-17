@@ -22,7 +22,6 @@ export class Button extends Phaser.GameObjects.Sprite {
     this.on("pointerout", this.btUnPush);
   }
 
-
   btPush() {
     this.setScale(0.92);
     this.setTint(0xf3f3f3);
