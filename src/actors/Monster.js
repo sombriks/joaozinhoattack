@@ -37,10 +37,11 @@ export class Monster extends Phaser.GameObjects.Sprite {
     this.scene.physics.add.existing(this)
       .setInteractive({useHandCursor: true});
     this.body
-      .setDamping(true)
-      .setDrag(this.dragPct)
+      .setCircle(this.width / 3, this.width / 6, this.height / 6) // figure out whi it works
       .setMaxVelocity(this.maxSpeed)
-      .setBounce(this.bouncePct);
+      .setBounce(this.bouncePct)
+      .setDrag(this.dragPct)
+      .setDamping(true);
   }
 
   /**
