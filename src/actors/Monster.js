@@ -11,7 +11,7 @@ export class Monster extends Phaser.GameObjects.Sprite {
   accPower = 500;
   maxSpeed = 200;
   dragPct = 0.2;
-  bouncePct = 0.5;
+  bouncePct = 1.5;
 
   /** @param {Phaser.Scene} stage*/
   static preload(stage) {
@@ -30,16 +30,17 @@ export class Monster extends Phaser.GameObjects.Sprite {
   constructor({scene, x = 0, y = 0, m = 0}) {
     super(scene, x, y, monsters[m]);
     this.setOrigin(0.5, 0.5);
-
     scene.add.existing(this);
-    scene.physics.add.existing(this);
+  }
 
-    this.setInteractive({useHandCursor: true});
+  resetBody() {
+    this.scene.physics.add.existing(this)
+      .setInteractive({useHandCursor: true});
     this.body
       .setDamping(true)
-      .setDrag(0.5);
-    this.body.setMaxVelocity(this.maxSpeed);
-    this.body.setBounce(this.bouncePct);
+      .setDrag(this.dragPct)
+      .setMaxVelocity(this.maxSpeed)
+      .setBounce(this.bouncePct);
   }
 
   /**

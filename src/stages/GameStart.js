@@ -21,7 +21,9 @@ export class GameStart extends Phaser.Scene {
     let m2 = new Monster({scene: this, x: 400, y: 600, m: 2});
     this.monsterGroup.add(this.player);
     this.monsterGroup.add(m2);
-    // this.monsterGroup.add(new Monster({scene: this, x: 400, y: 100, m: 0}));
+    this.monsterGroup.add(new Monster({scene: this, x: 400, y: 100, m: 0}));
+    // groups reset the bodies, so we config them again
+    this.monsterGroup.getChildren().forEach(m => m?.resetBody?.());
     // follow the player
     this.cameras.main.startFollow(this.player);
   }
