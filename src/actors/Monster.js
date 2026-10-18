@@ -10,7 +10,8 @@ export class Monster extends Phaser.GameObjects.Sprite {
 
   accPower = 500;
   maxSpeed = 200;
-  dragPower = 700;
+  dragPct = 0.2;
+  bouncePct = 0.5;
 
   /** @param {Phaser.Scene} stage*/
   static preload(stage) {
@@ -35,7 +36,9 @@ export class Monster extends Phaser.GameObjects.Sprite {
 
     this.setInteractive({useHandCursor: true});
     this.body.setMaxVelocity(this.maxSpeed);
-    this.body.setDrag(this.dragPower);
+    this.body.setBounce(this.bouncePct);
+    this.body.setDrag(this.dragPct);
+    this.body.setDamping(true);
   }
 
   /**

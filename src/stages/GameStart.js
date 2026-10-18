@@ -13,11 +13,16 @@ export class GameStart extends Phaser.Scene {
 
   create() {
     this.controller.install({keyboard: this.input.keyboard.createCursorKeys()});
+    this.monsterGroup = this.physics.add.group();
+    this.physics.add.collider(this.monsterGroup, this.monsterGroup);
+
     // we're all monsters here
     this.player = new Monster({scene: this, x: 400, y: 300, m: 1});
-    this.player = new Monster({scene: this, x: 400, y: 600, m: 2});
+    this.monsterGroup.add(new Monster({scene: this, x: 400, y: 600, m: 2}));
+    this.monsterGroup.add(new Monster({scene: this, x: 400, y: 100, m: 0}));
+    this.monsterGroup.add(this.player);
     // follow the player
-    this.cameras.main.startFollow(this.player);
+    // this.cameras.main.startFollow(this.player);
   }
 
   update(time, delta) {
