@@ -9,6 +9,7 @@
   "type": "module",
   "scripts": {
     "dev": "parcel src/index.html",
-    "build": "parcel build --dist-dir=dist src/index.html"
+    "build": "parcel build --dist-dir=dist src/index.html",
+    "build:gh": "parcel build --dist-dir dist --public-url /joaozinhoattack src/index.html"
   }
 }
