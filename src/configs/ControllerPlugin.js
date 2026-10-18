@@ -1,12 +1,18 @@
 import Phaser from 'phaser';
 
 export class ControllerPlugin extends Phaser.Plugins.ScenePlugin {
+  /** @type {Phaser.Types.Input.Keyboard.CursorKeys} */
+  keyboard
 
-  isActive = false;
-  angle = 0;
-  angleDegrees = 0;
-  distance = 0;
-  vector = {x: 0, y: 0};
+  #vector = {
+    x: 0,
+    y: 0
+  };
+
+  /** @return {{x: number, y: number}} */
+  get vector() {
+    return this.#vector;
+  }
 
   constructor(scene, pluginManager, key) {
     super(scene, pluginManager, key);
@@ -20,36 +26,53 @@ export class ControllerPlugin extends Phaser.Plugins.ScenePlugin {
     this.scene.sys.events.on("destroy", this.destroy, this);
   }
 
-  install() {
+  /**
+   * @param {Object} options
+   * @param {Phaser.Types.Input.Keyboard.CursorKeys} options.keyboard
+   **/
+  install({keyboard} = {}) {
+    this.keyboard = keyboard;
     this.scene.sys.events.on("update", this.update, this);
   }
 
-  /** @param {number} time
-   * @param {number} delta */
+  /**
+   * @param {number} time
+   * @param {number} delta
+   * */
   update(time, delta) {
     const pointer = this.scene.input.activePointer;
-    if (!pointer.isDown) {
-      if (this.isActive) this.reset();
-      return;
-    }
-    this.distance = Phaser.Math.Distance.Between(pointer.downX, pointer.downY, pointer.x, pointer.y);
-    if (this.distance > 10) {
-      this.isActive = true;
-      this.angle = Phaser.Math.Angle.Between(pointer.downX, pointer.downY, pointer.x, pointer.y);
-      this.vector.x = Math.cos(this.angle);
-      this.vector.y = Math.sin(this.angle);
+    if (pointer.isDown) {
+      const distance = Phaser.Math.Distance.Between(pointer.downX, pointer.downY, pointer.x, pointer.y);
+      if (distance > 10) {
+        const angle = Phaser.Math.Angle.Between(pointer.downX, pointer.downY, pointer.x, pointer.y);
+        this.#vector.x = Math.cos(angle);
+        this.#vector.y = Math.sin(angle);
+      } else {
+        this.reset();
+      }
+    } else if (this.keyboard) {
+      if (this.keyboard.left.isDown) {
+        this.#vector.x = -1;
+      } else if (this.keyboard.right.isDown) {
+        this.#vector.x = 1;
+      } else {
+        this.#vector.x = 0;
+      }
+      if (this.keyboard.up.isDown) {
+        this.#vector.y = -1;
+      } else if (this.keyboard.down.isDown) {
+        this.#vector.y = 1;
+      } else {
+        this.#vector.y = 0;
+      }
     } else {
-      this.vector.x = 0;
-      this.vector.y = 0;
+      this.reset();
     }
   }
 
   reset() {
-    this.isActive = false;
-    this.angle = 0;
-    this.angleDegrees = 0;
-    this.distance = 0;
-    this.vector = {x: 0, y: 0};
+    this.#vector.x = 0;
+    this.#vector.y = 0;
   }
 
   uninstall() {

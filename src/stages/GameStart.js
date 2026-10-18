@@ -12,19 +12,16 @@ export class GameStart extends Phaser.Scene {
   }
 
   create() {
-    this.cursors = this.input.keyboard.createCursorKeys();
-    this.controller.install();
-    this.monster = new Monster({scene: this, x: 400, y: 300});
-    // this.cameras.main.startFollow(this.monster);
-
+    this.controller.install({keyboard: this.input.keyboard.createCursorKeys()});
+    // we're all monsters here
+    this.player = new Monster({scene: this, x: 400, y: 300, m: 1});
+    this.player = new Monster({scene: this, x: 400, y: 600, m: 2});
+    // follow the player
+    this.cameras.main.startFollow(this.player);
   }
 
   update(time, delta) {
-    // XXX to be truly agnostic, it should not know the controls, just the destination or expected force.
-    this.monster.move({
-      controller: this.controller,
-      cursors: this.cursors
-    })
+    this.player.move(this.controller.vector)
   }
 
 }
