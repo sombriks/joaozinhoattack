@@ -7,8 +7,9 @@ import UAAAHN from "url:../assets/sfx/uaaah.m4a"
 import MONSTRO_1 from "url:../assets/sprites/monstro-1.png"
 import MONSTRO_2 from "url:../assets/sprites/monstro-2.png"
 import MONSTRO_3 from "url:../assets/sprites/monstro-3.png"
+import {PowerLabel} from "./PowerLabel.js";
 
-const sfx = [PEIDO,HUUOOP, UAAAHN];
+const sfx = [PEIDO, HUUOOP, UAAAHN];
 const sprites = [MONSTRO_1, MONSTRO_2, MONSTRO_3];
 
 export class Monster extends Phaser.GameObjects.Sprite {
@@ -17,6 +18,12 @@ export class Monster extends Phaser.GameObjects.Sprite {
   maxSpeed = 700;
   dragPct = 0.1;
   bouncePct = 3;
+
+  life = 10;
+  attack = 1;
+  weapon = 0;
+
+  stunned = false;
 
   /** @param {Phaser.Scene} stage*/
   static preload(stage) {
@@ -40,6 +47,7 @@ export class Monster extends Phaser.GameObjects.Sprite {
     this.setOrigin(0.5, 0.5);
     scene.add.existing(this);
     this.m = m;
+    new PowerLabel(this);
   }
 
   resetBody() {
@@ -59,13 +67,34 @@ export class Monster extends Phaser.GameObjects.Sprite {
    * @param {number} vector.y
    **/
   move({x, y}) {
-    this.body.setAccelerationX(x * this.accPower);
-    this.body.setAccelerationY(y * this.accPower);
+    if (!this.stunned) {
+      this.body.setAccelerationX(x * this.accPower);
+      this.body.setAccelerationY(y * this.accPower);
+    } else {
+      this.body.setAcceleration(0, 0);
+    }
   }
 
   /** @param {Monster} monster*/
   hit(monster) {
     this.scene.sound.play(sfx[this.m]);
-    // cause damage
+    monster.life -= this.attack + this.weapon;
+    if (this.weapon > 0) this.weapon--;
+    this.stun();
+  }
+
+  stun(duration = 1000) {
+    this.stunned = true;
+    this.scene.time.delayedCall(duration, () => {
+      this.stunned = false;
+    }, [], this);
+  }
+
+  checkDead() {
+    // TODO fancy animation
+    if (this.life <= 0) {
+      this.body.enable = false;
+      this.destroy();
+    }
   }
 }
