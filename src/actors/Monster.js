@@ -25,6 +25,9 @@ export class Monster extends Phaser.GameObjects.Sprite {
 
   stunned = false;
 
+  /** @type {PowerLabel}*/
+  powerLabel;
+
   /** @param {Phaser.Scene} stage*/
   static preload(stage) {
     stage.load.audio(HUUOOP, HUUOOP);
@@ -47,7 +50,7 @@ export class Monster extends Phaser.GameObjects.Sprite {
     this.setOrigin(0.5, 0.5);
     scene.add.existing(this);
     this.m = m;
-    new PowerLabel(this);
+    this.powerLabel = new PowerLabel(this);
   }
 
   resetBody() {
@@ -93,6 +96,7 @@ export class Monster extends Phaser.GameObjects.Sprite {
   checkDead() {
     // TODO fancy animation
     if (this.life <= 0) {
+      this.powerLabel.destroy();
       this.body.enable = false;
       this.destroy();
     }

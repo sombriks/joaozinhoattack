@@ -22,12 +22,14 @@ export class PowerLabel {
     if (!this.text) return;
     this.text.x = this.monster?.x - this.monster?.width / 3;
     this.text.y = this.monster?.y + this.monster?.height / 3;
-    this.text.text = `⚔️ ${this.monster?.weapon + this.monster?.attack} ❤️ ${this.monster?.life}`;
+    this.text?.setText(`⚔️ ${this.monster?.weapon + this.monster?.attack} ❤️ ${this.monster?.life}`);
   }
 
   destroy() {
     this.monster?.scene.events.off('update', this.update, this);
     this.monster?.scene.events.off('destroy', this.destroy, this);
     this.text?.destroy();
+    delete this.monster;
+    delete this.text;
   }
 }
