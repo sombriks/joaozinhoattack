@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 
-import BTN_TESTE from "url:../assets/btn_teste.png";
-import CLICK from "url:../assets/click.mp3";
+import CLICK from "url:../assets/sfx/click.mp3";
+import BTN_TESTE from "url:../assets/sprites/btn_teste.png";
 
 export class Button extends Phaser.GameObjects.Sprite {
   /** @param {Phaser.Scene} stage*/

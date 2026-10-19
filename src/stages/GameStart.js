@@ -14,7 +14,7 @@ export class GameStart extends Phaser.Scene {
   create() {
     this.controller.install({keyboard: this.input.keyboard.createCursorKeys()});
     this.monsterGroup = this.physics.add.group();
-    this.physics.add.collider(this.monsterGroup, this.monsterGroup);
+    this.physics.add.collider(this.monsterGroup, this.monsterGroup, this.battle);
 
     // we're all monsters here
     this.player = new Monster({scene: this, x: 400, y: 300, m: 1});
@@ -28,8 +28,15 @@ export class GameStart extends Phaser.Scene {
     this.cameras.main.startFollow(this.player);
   }
 
+  /**
+   * @param {Monster} m1
+   * @param {Monster} mn2
+   */
+  battle(m1, m2) {
+    m1.hit(m2);
+  }
+
   update(time, delta) {
     this.player.move(this.controller.vector)
   }
-
 }

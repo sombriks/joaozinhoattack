@@ -3,7 +3,7 @@
   "start_url": "../index.html",
   "display": "standalone",
   "icons": [{
-    "src": "../assets/icone-1.png",
+    "src": "../assets/sprites/icone-1.png",
     "sizes": "512x512",
     "type": "image/png"
   }]
