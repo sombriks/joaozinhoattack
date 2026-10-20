@@ -22,11 +22,13 @@ export class GameStart extends Phaser.Scene {
     this.arena = new BattleArena(this);
     this.physics.add.collider(this.monsterGroup, this.arena.layer);
     // we're all monsters here
-    this.player = new Monster({scene: this, x: 400, y: 300, m: 1});
-    let m2 = new Monster({scene: this, x: 400, y: 600, m: 2});
-    this.monsterGroup.add(m2);
-    this.monsterGroup.add(new Monster({scene: this, x: 800, y: 600, m: 0}));
-    this.monsterGroup.add(this.player);
+    this.arena.spawnPoints.forEach(sp => this.monsterGroup.add(new Monster({
+      scene: this,
+      x: sp.x,
+      y: sp.y,
+      m: Phaser.Math.Between(0, 2)
+    })));
+    this.player = this.monsterGroup.getChildren()[0];
     // groups reset the bodies, so we config them again
     this.monsterGroup.getChildren().forEach(m => m?.resetBody?.());
     // adjust the camera and the world to the map
