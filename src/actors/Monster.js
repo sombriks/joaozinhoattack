@@ -17,7 +17,7 @@ export class Monster extends Phaser.GameObjects.Sprite {
   accPower = 900;
   maxSpeed = 700;
   dragPct = 0.1;
-  bouncePct = 3;
+  bouncePct = 0.9;
 
   life = 10;
   attack = 1;

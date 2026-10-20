@@ -14,6 +14,10 @@ canvas {
     margin: 0 0 0 0;
 }
 
+canvas {
+    border: 1px dashed var(--fg);
+}
+
 a.gh {
     position: absolute;
     top: 0;
