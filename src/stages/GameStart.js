@@ -26,7 +26,7 @@ export class GameStart extends Phaser.Scene {
       scene: this,
       x: sp.x,
       y: sp.y,
-      m: Phaser.Math.Between(0, 2)
+      m: Phaser.Math.Between(0, 9)
     })));
     this.player = this.monsterGroup.getChildren()[0];
     // groups reset the bodies, so we config them again

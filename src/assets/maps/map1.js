@@ -1,4 +1,5 @@
-const map = `
+// src/assets/maps/map1.js
+const map1 = `
     11111111111111
     10000000000001
     1000M010M00001
@@ -13,4 +14,4 @@ const map = `
     10000000000001
     11111111111111
   `;
-export default map;
+export default map1;

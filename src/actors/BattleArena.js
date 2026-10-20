@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-import map from "../assets/maps/map1.js";
+import map1 from "../assets/maps/map1.js";
 
 export class BattleArena {
   /** @type {Phaser.Scene} */
@@ -12,7 +12,7 @@ export class BattleArena {
   /** @type {Array<{x: number, y: number}>} */
   _spawnPoints = [];
   _blockSize = 128;
-  _layoutDesign = map;
+  _layoutDesign = map1;
 
   /** @param {Phaser.Scene} scene */
   constructor(scene) {

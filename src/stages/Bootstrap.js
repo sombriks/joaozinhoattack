@@ -15,11 +15,11 @@ export class Bootstrap extends Phaser.Scene {
 
   create() {
     new Button({
+      text: "Start Game!",
       scene: this,
       x: 200,
       y: 200,
       callback: () => this.game.scene.switch("Bootstrap", "GameStart"),
     });
-    // this.game.scene.switch("Bootstrap", "GameStart")
   }
 }
