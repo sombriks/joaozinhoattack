@@ -1,35 +1,31 @@
-export class PowerLabel {
+export class PowerLabel extends Phaser.GameObjects.Text {
   /** @type {Monster} */
   monster;
-  /** @type {Phaser.GameObjects.Text} */
-  text;
 
   /** @param {Monster} monster */
   constructor(monster) {
-    this.monster = monster;
-    this.text = monster?.scene.add.text(0, 0, '', {
+    super(monster.scene, 0, 0, '', {
       fontFamily: 'Mono Bold',
       strokeThickness: 3,
       fontSize: '20px',
       stroke: '#fff',
       fill: '#000',
     });
-    monster?.scene.events.on('update', this.update, this);
-    monster?.scene.events.on('destroy', this.destroy, this);
+
+    this.monster = monster;
+    this.scene.add.existing(this);
+    this.scene.sys.updateList.add(this);
   }
 
-  update() {
-    if (!this.text) return;
-    this.text.x = this.monster?.x - this.monster?.width / 3;
-    this.text.y = this.monster?.y + this.monster?.height / 3;
-    this.text?.setText(`⚔️ ${this.monster?.weapon + this.monster?.attack} ❤️ ${this.monster?.life}`);
+  preUpdate() {
+    if (!this.monster) return;
+    this.x = this.monster?.x - this.monster?.width / 3;
+    this.y = this.monster?.y + this.monster?.height / 3;
+    this.text = `⚔️ ${this.monster?.weapon + this.monster?.attack} ❤️ ${this.monster?.life}`;
   }
 
-  destroy() {
-    this.monster?.scene.events.off('update', this.update, this);
-    this.monster?.scene.events.off('destroy', this.destroy, this);
-    this.text?.destroy();
+  destroy(args) {
     delete this.monster;
-    delete this.text;
+    super.destroy();
   }
 }

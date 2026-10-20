@@ -1,5 +1,7 @@
 import Phaser from "phaser";
 
+import map from "../assets/maps/map1.js";
+
 export class BattleArena {
   /** @type {Phaser.Scene} */
   scene;
@@ -10,22 +12,7 @@ export class BattleArena {
   /** @type {Array<{x: number, y: number}>} */
   _spawnPoints = [];
   _blockSize = 128;
-  // TODO this can be externalized as an asset
-  _layoutDesign = `
-    11111111111111
-    10000000000001
-    1000M010M00001
-    10000010000001
-    10001111000001
-    10000100000001
-    100000000M0001
-    110M0000000001
-    10000000000001
-    10011111000001
-    1000000000M001
-    10000000000001
-    11111111111111
-  `;
+  _layoutDesign = map;
 
   /** @param {Phaser.Scene} scene */
   constructor(scene) {
