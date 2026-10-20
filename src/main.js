@@ -9,7 +9,7 @@ import {ControllerPlugin} from "./configs/ControllerPlugin";
 
 export const game = new Phaser.Game({
   pixelArt: true,
-  width: 480,
+  width: 640,
   height: 640,
   scene: [Bootstrap, GameStart, GamePlay],
   plugins: {
@@ -18,7 +18,7 @@ export const game = new Phaser.Game({
     ]
   },
   scale: {
-    mode: Phaser.Scale.FIT,
+    mode: Phaser.Scale.ENVELOP,
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
   physics: {

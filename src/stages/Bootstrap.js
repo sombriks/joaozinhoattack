@@ -14,11 +14,12 @@ export class Bootstrap extends Phaser.Scene {
   }
 
   create() {
+    const p = Math.min(window.innerWidth, window.innerHeight) / 2;
     new Button({
       text: "Start Game!",
       scene: this,
-      x: 200,
-      y: 200,
+      x: p,
+      y: p,
       callback: () => this.game.scene.switch("Bootstrap", "GameStart"),
     });
   }
