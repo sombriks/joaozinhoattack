@@ -12,6 +12,7 @@ export class Monster extends Phaser.GameObjects.Sprite {
   life = 10;
   attack = 1;
   weapon = 0;
+  armor = 0;
 
   stunned = false;
 
@@ -33,6 +34,7 @@ export class Monster extends Phaser.GameObjects.Sprite {
    *   speed:number,
    *   agility:number,
    *   weapon:number,
+   *   armor:number,
    *   image:string,
    *   sound:string
    * }} config.m
@@ -52,17 +54,19 @@ export class Monster extends Phaser.GameObjects.Sprite {
    *   speed:number,
    *   agility:number,
    *   weapon:number,
+   *   armor:number,
    *   image:string,
    *   sound:string
    * }} m
    */
   resetCharacter(m) {
     this.m = m;
-    this.attack = m.attack;
-    this.life = m.life;
-    this.speed = m.speed * 100;
-    this.accPower = m.agility * 100;
-    this.weapon = m.weapon;
+    this.attack = m.attack ?? 1;
+    this.life = m.life ?? 10;
+    this.speed = (m.speed ?? 1) * 100;
+    this.accPower = (m.agility ?? 1) * 100;
+    this.weapon = m.weapon ?? 0;
+    this.armor = m.armor ?? 0;
     this.image = m.image;
     this.sound = m.sound;
   }
@@ -101,6 +105,10 @@ export class Monster extends Phaser.GameObjects.Sprite {
   }
 
   damage(d = 0) {
+    if (this.armor > 0) {
+      this.armor--;
+      d -= 1;
+    }
     this.life -= d;
   }
 

@@ -10,9 +10,11 @@ export class BattleArena {
   /** @type {Phaser.Tilemaps.TilemapLayer} */
   _layer;
   /** @type {Array<{x: number, y: number}>} */
+  _itemPoints = [];
+  /** @type {Array<{x: number, y: number}>} */
   _spawnPoints = [];
   _blockSize = 128;
-  _layoutDesign = map1;
+  _layoutDesign = map1.map;
 
   /** @param {Phaser.Scene} scene */
   constructor(scene) {
@@ -26,6 +28,10 @@ export class BattleArena {
 
   get layer() {
     return this._layer;
+  }
+
+  get itemPoints() {
+    return this._itemPoints;
   }
 
   get spawnPoints() {
@@ -55,12 +61,16 @@ export class BattleArena {
     linhas.forEach((linha, y) => {
       const blocos = linha.split("");
       blocos.forEach((bloco, x) => {
-        if (bloco === "1") {
+        if (bloco === map1.wall) {
           this._layer.putTileAt(0, x, y);
-        } else if (bloco === "M") {
+        } else if (bloco === map1.monster) {
           const pixelX = x * this._blockSize + this._blockSize / 2;
           const pixelY = y * this._blockSize + this._blockSize / 2;
           this._spawnPoints.push({ x: pixelX, y: pixelY });
+        }else if (bloco === map1.item) {
+          const pixelX = x * this._blockSize + this._blockSize / 2;
+          const pixelY = y * this._blockSize + this._blockSize / 2;
+          this._itemPoints.push({ x: pixelX, y: pixelY });
         }
       });
     });

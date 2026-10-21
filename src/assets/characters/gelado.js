@@ -6,7 +6,7 @@ export default {
   life: 6,
   speed: 4,
   agility: 4,
-  weapon: 0,
+  armor: 1,
   image: MONSTRO_2,
   sound: SOM_10,
 };

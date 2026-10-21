@@ -37,3 +37,4 @@ npm run dev
   ouvintes pode dar vazamento de memória.
 - A melhor configuração da Canvas do game é **640x640** e o `scale.mode`  
   setado para `Phaser.Scale.ENVELOP`.
+- `this.scene.start("")` é diferente de `this.game.scene.start("")`
