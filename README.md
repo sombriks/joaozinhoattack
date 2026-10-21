@@ -30,4 +30,10 @@ npm run dev
 - O parcel não é exatamente zero-confioguração, ele apenas vai se 
   configurando sozinho, de acordo com o que você decide usar. É bom conferir 
   sempre o que ele está fazendo no `package.json` sem você saber.
-- Os plugins do phaser são um pouco burocráticos, mas são recompensadores.
+- Os plugins do phaser são um pouco burocráticos, mas são recompensadores. 
+  Muita coisa é simplificada quando é oferecida como um comportamento já 
+  instalado na `Scene`.
+- Todo `GameObject` é um `EventEmitter`. Esquecer de _desregistrar_ os 
+  ouvintes pode dar vazamento de memória.
+- A melhor configuração da Canvas do game é **640x640** e o `scale.mode`  
+  setado para `Phaser.Scale.ENVELOP`.

@@ -19,8 +19,8 @@ export class Button extends Phaser.GameObjects.Text {
    */
   constructor({scene, x = 0, y = 0, text = "CLICK ME!", callback}) {
     super(scene, x, y, text, {
-      fontFamily: 'Mono Bold',
-      fontSize: '42px',
+      fontFamily: 'Mono',
+      fontSize: '32px',
       fill: '#000000',
       backgroundColor: '#ffffff',
       stroke: '#000000',

@@ -21,7 +21,8 @@ export class PowerLabel extends Phaser.GameObjects.Text {
     if (!this.monster) return;
     this.x = this.monster?.x - this.monster?.width / 3;
     this.y = this.monster?.y + this.monster?.height / 3;
-    this.text = `⚔️ ${this.monster?.weapon + this.monster?.attack} ❤️ ${this.monster?.life}`;
+    const w = this.monster?.weapon > 0 ? `+${this.monster?.weapon}` : "";
+    this.text = `⚔️ ${this.monster?.attack} ${w} ❤️ ${this.monster?.life}`;
   }
 
   destroy(args) {

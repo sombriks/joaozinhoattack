@@ -38,7 +38,7 @@ export class BattleArena {
     const altura = linhas.length;
 
     const wallGraphics = this.scene.make.graphics({ x: 0, y: 0, add: false });
-    wallGraphics.fillStyle(0x44AA44, 1);
+    wallGraphics.fillStyle(0x248842, 1);
     wallGraphics.fillRect(0, 0, this._blockSize, this._blockSize);
     wallGraphics.generateTexture("bloco_parede", this._blockSize, this._blockSize);
 

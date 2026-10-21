@@ -3,6 +3,30 @@ import Phaser from "phaser";
 import {Monster} from "../actors/Monster";
 import {BattleArena} from "../actors/BattleArena";
 
+import boboleia from "../assets/characters/boboleia";
+import catarro from "../assets/characters/catarro";
+import cegodongo from "../assets/characters/cegodongo";
+import coelhoso from "../assets/characters/coelhoso";
+import fumego from "../assets/characters/fumego";
+import gelado from "../assets/characters/gelado";
+import juizinho from "../assets/characters/juizinho";
+import palhaciano from "../assets/characters/palhaciano";
+import pedrero from "../assets/characters/pedrero";
+import raposolicial from "../assets/characters/raposolicial";
+
+const characters = [
+  boboleia,
+  catarro,
+  cegodongo,
+  coelhoso,
+  fumego,
+  gelado,
+  juizinho,
+  palhaciano,
+  pedrero,
+  raposolicial
+];
+
 export class GameStart extends Phaser.Scene {
   constructor() {
     super({key: "GameStart"});
@@ -26,7 +50,7 @@ export class GameStart extends Phaser.Scene {
       scene: this,
       x: sp.x,
       y: sp.y,
-      m: Phaser.Math.Between(0, 9)
+      m: characters[Phaser.Math.Between(0, 9)]
     })));
     this.player = this.monsterGroup.getChildren()[0];
     // groups reset the bodies, so we config them again

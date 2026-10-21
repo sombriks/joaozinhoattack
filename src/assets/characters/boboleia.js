@@ -1,8 +1,8 @@
-import SOM_4 from "url:../assets/sfx/huuoop.m4a";
-import MONSTRO_4 from "url:../assets/sprites/boboleia.png";
+import SOM_4 from "url:../sfx/huuoop.m4a";
+import MONSTRO_4 from "url:../sprites/boboleia.png";
 
 export default {
-  attack: 2,
+  attack: 1,
   life: 30,
   speed: 1,
   agility: 2,
