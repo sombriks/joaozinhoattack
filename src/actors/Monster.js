@@ -95,9 +95,13 @@ export class Monster extends Phaser.GameObjects.Sprite {
   /** @param {Monster} monster*/
   hit(monster) {
     this.scene.sound.play(this.m.sound);
-    monster.life -= this.attack + (this.weapon > 0 ? 1 : 0);
-    if(this.weapon > 0) this.weapon--;
+    monster.damage(this.attack + (this.weapon > 0 ? 1 : 0));
+    if (this.weapon > 0) this.weapon--;
     this.stun();
+  }
+
+  damage(d = 0) {
+    this.life -= d;
   }
 
   stun(duration = 1000) {
@@ -108,8 +112,9 @@ export class Monster extends Phaser.GameObjects.Sprite {
   }
 
   checkDead() {
-    // TODO fancy animation
     if (this.life <= 0) {
+      console.log("Monster died");
+      this.emit('die', {x: this.x, y: this.y});
       this.powerLabel.destroy();
       this.body.enable = false;
       this.destroy();

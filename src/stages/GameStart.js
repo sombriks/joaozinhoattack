@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 
+import {Button} from "../actors/Button";
 import {Monster} from "../actors/Monster";
 import {BattleArena} from "../actors/BattleArena";
 
@@ -53,6 +54,14 @@ export class GameStart extends Phaser.Scene {
       m: characters[Phaser.Math.Between(0, 9)]
     })));
     this.player = this.monsterGroup.getChildren()[0];
+    this.player.on('die', ({x, y}) => {
+      new Button({
+        callback: () => this.scene.start("Bootstrap"),
+        text: "Game Over",
+        scene: this,
+        x, y,
+      })
+    });
     // groups reset the bodies, so we config them again
     this.monsterGroup.getChildren().forEach(m => m?.resetBody?.());
     // adjust the camera and the world to the map
