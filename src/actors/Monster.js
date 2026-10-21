@@ -13,16 +13,16 @@ import SOM_8 from "url:../assets/sfx/pxiiuu.m4a";
 import SOM_9 from "url:../assets/sfx/uaaah.m4a";
 import SOM_10 from "url:../assets/sfx/weeon.m4a";
 
-import MONSTRO_1 from "url:../assets/sprites/monstro-1.png"
-import MONSTRO_2 from "url:../assets/sprites/monstro-2.png"
-import MONSTRO_3 from "url:../assets/sprites/monstro-3.png"
-import MONSTRO_4 from "url:../assets/sprites/monstro-4.png"
-import MONSTRO_5 from "url:../assets/sprites/monstro-5.png"
-import MONSTRO_6 from "url:../assets/sprites/monstro-6.png"
-import MONSTRO_7 from "url:../assets/sprites/monstro-7.png"
-import MONSTRO_8 from "url:../assets/sprites/monstro-8.png"
-import MONSTRO_9 from "url:../assets/sprites/monstro-9.png"
-import MONSTRO_10 from "url:../assets/sprites/monstro-10.png"
+import MONSTRO_1 from "url:../assets/sprites/catarro.png";
+import MONSTRO_2 from "url:../assets/sprites/gelado.png";
+import MONSTRO_3 from "url:../assets/sprites/fumego.png";
+import MONSTRO_4 from "url:../assets/sprites/boboleia.png";
+import MONSTRO_5 from "url:../assets/sprites/pedrero.png";
+import MONSTRO_6 from "url:../assets/sprites/coelhoso.png";
+import MONSTRO_7 from "url:../assets/sprites/palhaciano.png";
+import MONSTRO_8 from "url:../assets/sprites/juizinho.png";
+import MONSTRO_9 from "url:../assets/sprites/cegodongo.png";
+import MONSTRO_10 from "url:../assets/sprites/raposolicial.png";
 
 const sfx = [SOM_1, SOM_2, SOM_3, SOM_4, SOM_5, SOM_6, SOM_7, SOM_8, SOM_9, SOM_10];
 const sprites = [MONSTRO_1, MONSTRO_2, MONSTRO_3, MONSTRO_4, MONSTRO_5, MONSTRO_6, MONSTRO_7, MONSTRO_8, MONSTRO_9, MONSTRO_10];
