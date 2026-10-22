@@ -5,10 +5,12 @@ import {Monster} from "../actors/Monster";
 import {BattleArena} from "../actors/BattleArena";
 import {characters} from "../assets/characters/index";
 import {Item} from "../actors/Item.js";
+import {ControllerNPC} from "../configs/ControllerNPC.js";
 
 export class GameStart extends Phaser.Scene {
   /** @type {Monster|Phaser.GameObjects.GameObject}*/
   player;
+  npcs = new Map();
 
   constructor() {
     super({key: "GameStart"});
@@ -38,8 +40,11 @@ export class GameStart extends Phaser.Scene {
     // pick a monster randomly to be the player
     const i = Phaser.Math.Between(0, monsterGroup.getChildren().length - 1);
     this.playerSetup(monsterGroup.getChildren()[i]);
+    // autopilot on everyone else
+    monsterGroup.getChildren().filter(m => m !== this.player).forEach(m => this.setupNPC(m));
     // finally, the spawn clock to make things interesting
     this.time.addEvent({
+      loop: true,
       delay: 30000,
       callback: () => {
         // replenish items
@@ -50,9 +55,8 @@ export class GameStart extends Phaser.Scene {
         const monster = this.spawnMonster(arena.spawnPoints[p]);
         monsterGroup.add(monster);
         monster.resetBody();
-      },
-      callbackScope: this,
-      loop: true
+        this.setupNPC(monster);
+      }
     });
   }
 
@@ -91,6 +95,12 @@ export class GameStart extends Phaser.Scene {
     });
   }
 
+  setupNPC(monster) {
+    const controller = new ControllerNPC();
+    this.npcs.set(controller, monster);
+    monster.on('die', () => this.npcs.delete(controller));
+  }
+
   /**
    * @param {Monster} m1
    * @param {Monster} m2
@@ -109,8 +119,9 @@ export class GameStart extends Phaser.Scene {
   }
 
   update(time, delta) {
-    if (this.player?.active) {
-      this.player?.move(this.controller.vector);
-    }
+    this.player?.move(this.controller.vector);
+    this.npcs.forEach((monster, controller) => {
+      monster?.move(controller.update(time).vector);
+    });
   }
 }

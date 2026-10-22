@@ -85,6 +85,7 @@ export class Monster extends Phaser.GameObjects.Sprite {
    * @param {number} vector.y
    **/
   move({x, y}) {
+    if(!this.active) return;
     if (!this.stunned) {
       this.body.setAccelerationX(x * this.accPower);
       this.body.setAccelerationY(y * this.accPower);
