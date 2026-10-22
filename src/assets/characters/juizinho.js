@@ -4,7 +4,7 @@ import SOM_5 from "url:../sfx/ooohhhh.m4a";
 export default {
   attack: 1,
   life: 10,
-  speed: 7,
+  speed: 5,
   agility: 7,
   weapon: 1,
   image: MONSTRO_8,

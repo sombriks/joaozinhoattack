@@ -6,11 +6,14 @@ import {BattleArena} from "../actors/BattleArena";
 import {characters} from "../assets/characters/index";
 import {Item} from "../actors/Item.js";
 import {ControllerNPC} from "../configs/ControllerNPC.js";
+import {KillCount} from "../actors/KillCount.js";
 
 export class GameStart extends Phaser.Scene {
   /** @type {Monster|Phaser.GameObjects.GameObject}*/
   player;
+  killcount;
   npcs = new Map();
+  respawnDelay = 10000
 
   constructor() {
     super({key: "GameStart"});
@@ -44,8 +47,8 @@ export class GameStart extends Phaser.Scene {
     monsterGroup.getChildren().filter(m => m !== this.player).forEach(m => this.setupNPC(m));
     // finally, the spawn clock to make things interesting
     this.time.addEvent({
+      delay: this.respawnDelay,
       loop: true,
-      delay: 30000,
       callback: () => {
         // replenish items
         arena.itemPoints.forEach(p => itemGroup.add(this.spawnItem(p)));
@@ -58,6 +61,7 @@ export class GameStart extends Phaser.Scene {
         this.setupNPC(monster);
       }
     });
+    this.killcount = new KillCount({scene: this});
   }
 
   /** @param {{x:number,y:number}} p */
