@@ -3,31 +3,8 @@ import Phaser from "phaser";
 import {Button} from "../actors/Button";
 import {Monster} from "../actors/Monster";
 import {BattleArena} from "../actors/BattleArena";
-
-import boboleia from "../assets/characters/boboleia";
-import catarro from "../assets/characters/catarro";
-import cegodongo from "../assets/characters/cegodongo";
-import coelhoso from "../assets/characters/coelhoso";
-import fumego from "../assets/characters/fumego";
-import gelado from "../assets/characters/gelado";
-import juizinho from "../assets/characters/juizinho";
-import palhaciano from "../assets/characters/palhaciano";
-import pedrero from "../assets/characters/pedrero";
-import raposolicial from "../assets/characters/raposolicial";
+import {characters} from "../assets/characters/index";
 import {Item} from "../actors/Item.js";
-
-const characters = [
-  boboleia,
-  catarro,
-  cegodongo,
-  coelhoso,
-  fumego,
-  gelado,
-  juizinho,
-  palhaciano,
-  pedrero,
-  raposolicial
-];
 
 export class GameStart extends Phaser.Scene {
   /** @type {Monster}*/
@@ -54,7 +31,7 @@ export class GameStart extends Phaser.Scene {
     //
     // we're all monsters here
     arena.spawnPoints.forEach(sp => monsterGroup.add(new Monster({
-      m: characters[Phaser.Math.Between(0, 9)],
+      m: characters[Phaser.Math.Between(0, characters.length - 1)],
       scene: this,
       x: sp.x,
       y: sp.y
@@ -63,17 +40,17 @@ export class GameStart extends Phaser.Scene {
     monsterGroup.getChildren().forEach(m => m?.resetBody?.());
     //
     // add items
-    const items = ['life', 'armor', 'weapon'];
+    const items = Item.types;
     arena.itemPoints.forEach(sp => itemGroup.add(new Item({
       scene: this,
       x: sp.x,
       y: sp.y,
       info: {
-        [items[Phaser.Math.Between(0, 2)]]: Phaser.Math.Between(1, 5),
+        [items[Phaser.Math.Between(0, items.length - 1)]]: Phaser.Math.Between(1, 5),
       }
     })));
     //
-    // pick one randomly to be the player
+    // pick a monster randomly to be the player
     const i = Phaser.Math.Between(0, monsterGroup.getChildren().length - 1);
     this.player = monsterGroup.getChildren()[i];
     this.cameras.main.startFollow(this.player);

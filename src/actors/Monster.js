@@ -108,12 +108,12 @@ export class Monster extends Phaser.GameObjects.Sprite {
     this.life -= d;
   }
 
+  /** @param {import('./Item').Item} item*/
   consume(item) {
-    // play item sound
     this.life += item.life ?? 0;
     this.armor += item.armor ?? 0;
     this.weapon += item.weapon ?? 0;
-    item.destroy();
+    item.deplete();
   }
 
   stun(duration = 1000) {
