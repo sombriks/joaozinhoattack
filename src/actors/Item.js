@@ -33,6 +33,13 @@ export class Item extends Phaser.GameObjects.Text {
     if (this.armor > 0) this.text += `🛡️ +${this.armor}`;
   }
 
+  resetBody() {
+    this.scene.physics.add.existing(this)
+      .setInteractive({useHandCursor: true});
+    this.body
+      .setCircle(this.width / 3, this.width / 6, this.height / 6);
+  }
+
   deplete() {
     this.scene.sound.play(PLIM);
     this.destroy()

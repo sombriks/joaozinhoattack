@@ -40,6 +40,7 @@ export class Monster extends Phaser.GameObjects.Sprite {
     this.setOrigin(0.5, 0.5);
     scene.add.existing(this);
     this.resetCharacter(m);
+    this.resetBody();
     this.powerLabel = new PowerLabel(this);
   }
 
@@ -102,8 +103,10 @@ export class Monster extends Phaser.GameObjects.Sprite {
 
   damage(d = 0) {
     if (this.armor > 0) {
-      this.armor--;
-      d -= 1;
+      const d2 = d - this.armor;
+      this.armor -= d;
+      d = Math.max(0, d2);
+      if (this.armor < 0) this.armor = 0;
     }
     this.life -= d;
   }
