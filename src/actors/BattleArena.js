@@ -14,10 +14,12 @@ export class BattleArena {
   /** @type {Array<{x: number, y: number}>} */
   _spawnPoints = [];
   _blockSize = 128;
-  _layoutDesign = map1.map;
+  _layoutDesign; // see maps assets
 
-  /** @param {Phaser.Scene} scene */
-  constructor(scene) {
+  /** @param {Object} config
+   * @param {Phaser.Scene} config.scene */
+  constructor({scene, mapDesign = map1}) {
+    this._layoutDesign = mapDesign.map;
     this.scene = scene;
     this.build();
   }

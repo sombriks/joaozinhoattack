@@ -4,7 +4,7 @@ import SOM_7 from "url:../sfx/peido.m4a";
 export default {
   attack: 1,
   life: 5,
-  speed: 3,
+  speed: 9,
   agility: 6,
   image: MONSTRO_1,
   sound: SOM_7,

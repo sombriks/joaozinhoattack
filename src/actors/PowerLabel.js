@@ -1,3 +1,7 @@
+import Phaser from "phaser";
+
+import {baseStyle} from "../configs/font-style";
+
 export class PowerLabel extends Phaser.GameObjects.Text {
   /** @type {Monster} */
   monster;
@@ -5,11 +9,7 @@ export class PowerLabel extends Phaser.GameObjects.Text {
   /** @param {Monster} monster */
   constructor(monster) {
     super(monster.scene, 0, 0, '', {
-      fontFamily: 'Mono Bold',
-      strokeThickness: 3,
-      fontSize: '20px',
-      stroke: '#fff',
-      fill: '#000',
+      ...baseStyle
     });
 
     this.monster = monster;

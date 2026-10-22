@@ -14,6 +14,7 @@ import juizinho from "../assets/characters/juizinho";
 import palhaciano from "../assets/characters/palhaciano";
 import pedrero from "../assets/characters/pedrero";
 import raposolicial from "../assets/characters/raposolicial";
+import {Item} from "../actors/Item.js";
 
 const characters = [
   boboleia,
@@ -29,31 +30,53 @@ const characters = [
 ];
 
 export class GameStart extends Phaser.Scene {
+  /** @type {Monster}*/
+  player;
+
   constructor() {
     super({key: "GameStart"});
   }
 
-  preload() {
-    Monster.preload(this);
-  }
-
   create() {
-    // the user input will be used here
     this.controller.install({keyboard: this.input.keyboard.createCursorKeys()});
-    // monster group
-    this.monsterGroup = this.physics.add.group();
-    this.physics.add.collider(this.monsterGroup, this.monsterGroup, this.battle);
-    // the walls of this arena
-    this.arena = new BattleArena(this);
-    this.physics.add.collider(this.monsterGroup, this.arena.layer);
+    const arena = new BattleArena({scene: this});
+    //
+    // adjust the camera and the world to the map
+    this.physics.world.setBounds(0, 0, arena.map.widthInPixels, arena.map.heightInPixels);
+    this.cameras.main.setBounds(0, 0, arena.map.widthInPixels, arena.map.heightInPixels);
+    //
+    // groups
+    const monsterGroup = this.physics.add.group();
+    const itemGroup = this.physics.add.group();
+    this.physics.add.collider(monsterGroup, monsterGroup, this.battle);
+    this.physics.add.collider(monsterGroup, itemGroup, this.pickItem);
+    this.physics.add.collider(monsterGroup, arena.layer);
+    //
     // we're all monsters here
-    this.arena.spawnPoints.forEach(sp => this.monsterGroup.add(new Monster({
+    arena.spawnPoints.forEach(sp => monsterGroup.add(new Monster({
+      m: characters[Phaser.Math.Between(0, 9)],
+      scene: this,
+      x: sp.x,
+      y: sp.y
+    })));
+    // groups reset the bodies, so we config them again
+    monsterGroup.getChildren().forEach(m => m?.resetBody?.());
+    //
+    // add items
+    const items = ['life', 'armor', 'weapon'];
+    arena.itemPoints.forEach(sp => itemGroup.add(new Item({
       scene: this,
       x: sp.x,
       y: sp.y,
-      m: characters[Phaser.Math.Between(0, 9)]
+      info: {
+        [items[Phaser.Math.Between(0, 2)]]: Phaser.Math.Between(1, 5),
+      }
     })));
-    this.player = this.monsterGroup.getChildren()[0];
+    //
+    // pick one randomly to be the player
+    const i = Phaser.Math.Between(0, monsterGroup.getChildren().length - 1);
+    this.player = monsterGroup.getChildren()[i];
+    this.cameras.main.startFollow(this.player);
     this.player.on('die', ({x, y}) => {
       new Button({
         callback: () => this.scene.start("Bootstrap"),
@@ -62,19 +85,11 @@ export class GameStart extends Phaser.Scene {
         x, y,
       })
     });
-    // groups reset the bodies, so we config them again
-    this.monsterGroup.getChildren().forEach(m => m?.resetBody?.());
-    // adjust the camera and the world to the map
-    const map = this.arena.map;
-    this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    // follow the player
-    this.cameras.main.startFollow(this.player);
   }
 
   /**
    * @param {Monster} m1
-   * @param {Monster} mn2
+   * @param {Monster} m2
    */
   battle(m1, m2) {
     m1.hit(m2);
@@ -83,9 +98,15 @@ export class GameStart extends Phaser.Scene {
     m2.checkDead();
   }
 
+  /** @param {Monster} monster
+   *  @param {Item} item */
+  pickItem(monster, item) {
+    monster.consume(item);
+  }
+
   update(time, delta) {
-    if (this.player && this.player.active) {
-      this.player.move(this.controller.vector);
+    if (this.player?.active) {
+      this.player?.move(this.controller.vector);
     }
   }
 }

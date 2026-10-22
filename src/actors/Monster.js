@@ -19,10 +19,6 @@ export class Monster extends Phaser.GameObjects.Sprite {
   /** @type {PowerLabel}*/
   powerLabel;
 
-  /** @param {Phaser.Scene} stage*/
-  static preload(stage) {
-  }
-
   /**
    * @param {Object}  config
    * @param {scene:Phaser.Scene} config.scene
@@ -63,7 +59,7 @@ export class Monster extends Phaser.GameObjects.Sprite {
     this.m = m;
     this.attack = m.attack ?? 1;
     this.life = m.life ?? 10;
-    this.speed = (m.speed ?? 1) * 100;
+    this.maxSpeed = (m.speed ?? 1) * 100;
     this.accPower = (m.agility ?? 1) * 100;
     this.weapon = m.weapon ?? 0;
     this.armor = m.armor ?? 0;
@@ -112,6 +108,14 @@ export class Monster extends Phaser.GameObjects.Sprite {
     this.life -= d;
   }
 
+  consume(item) {
+    // play item sound
+    this.life += item.life ?? 0;
+    this.armor += item.armor ?? 0;
+    this.weapon += item.weapon ?? 0;
+    item.destroy();
+  }
+
   stun(duration = 1000) {
     this.stunned = true;
     this.scene.time.delayedCall(duration, () => {
@@ -121,7 +125,6 @@ export class Monster extends Phaser.GameObjects.Sprite {
 
   checkDead() {
     if (this.life <= 0) {
-      console.log("Monster died");
       this.emit('die', {x: this.x, y: this.y});
       this.powerLabel.destroy();
       this.body.enable = false;

@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 
 import CLICK from "url:../assets/sfx/click.mp3";
+import {baseStyle} from "../configs/font-style";
 
 export class Button extends Phaser.GameObjects.Text {
   /** @param {Phaser.Scene} stage*/
@@ -19,18 +20,15 @@ export class Button extends Phaser.GameObjects.Text {
    */
   constructor({scene, x = 0, y = 0, text = "CLICK ME!", callback}) {
     super(scene, x, y, text, {
-      fontFamily: 'Mono',
+      ...baseStyle,
       fontSize: '32px',
-      fill: '#000000',
-      backgroundColor: '#ffffff',
-      stroke: '#000000',
-      strokeThickness: 1,
+      backgroundColor: '#333',
       padding:
         {
+          bottom: 10,
           left: 20,
           right: 20,
-          top: 10,
-          bottom: 10
+          top: 10
         }
     });
 
