@@ -11,7 +11,8 @@ import {KillCount} from "../actors/KillCount.js";
 export class GameStart extends Phaser.Scene {
   /** @type {Monster|Phaser.GameObjects.GameObject}*/
   player;
-  killcount;
+  /** @type {KillCount} */
+  killCount;
   npcs = new Map();
   respawnDelay = 10000
 
@@ -61,7 +62,7 @@ export class GameStart extends Phaser.Scene {
         this.setupNPC(monster);
       }
     });
-    this.killcount = new KillCount({scene: this});
+    this.killCount = new KillCount({scene: this});
   }
 
   /** @param {{x:number,y:number}} p */
@@ -102,7 +103,12 @@ export class GameStart extends Phaser.Scene {
   setupNPC(monster) {
     const controller = new ControllerNPC();
     this.npcs.set(controller, monster);
-    monster.on('die', () => this.npcs.delete(controller));
+    monster.on('die', ({killedBy}) => {
+      this.npcs.delete(controller);
+      if (killedBy === this.player) {
+        this.killCount.count++;
+      }
+    });
   }
 
   /**
@@ -112,8 +118,8 @@ export class GameStart extends Phaser.Scene {
   battle(m1, m2) {
     m1.hit(m2);
     m2.hit(m1);
-    m1.checkDead();
-    m2.checkDead();
+    m1.checkDead(m2);
+    m2.checkDead(m1);
   }
 
   /** @param {Monster} monster

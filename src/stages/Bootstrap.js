@@ -16,7 +16,7 @@ export class Bootstrap extends Phaser.Scene {
   }
 
   create() {
-    const p = Math.min(window.innerWidth, window.innerHeight) / 2;
+    const p = Math.min(this.scale.width, this.scale.height) / 2;
     new Button({
       callback: () => this.scene.start("GameStart"),
       text: "Joãozinho Attack!",

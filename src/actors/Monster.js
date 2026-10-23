@@ -85,7 +85,7 @@ export class Monster extends Phaser.GameObjects.Sprite {
    * @param {number} vector.y
    **/
   move({x, y}) {
-    if(!this.active) return;
+    if (!this.active) return;
     if (!this.stunned) {
       this.body.setAccelerationX(x * this.accPower);
       this.body.setAccelerationY(y * this.accPower);
@@ -127,12 +127,13 @@ export class Monster extends Phaser.GameObjects.Sprite {
     }, [], this);
   }
 
-  checkDead() {
-    if (this.life <= 0) {
-      this.emit('die', {x: this.x, y: this.y});
-      this.powerLabel.destroy();
-      this.body.enable = false;
-      this.destroy();
-    }
+  /** @param {Monster} monster*/
+  checkDead(monster) {
+    if (this.life > 0) return false;
+    this.emit('die', {x: this.x, y: this.y, killedBy: monster});
+    this.powerLabel.destroy();
+    this.body.enable = false;
+    this.destroy();
+    return true;
   }
 }
